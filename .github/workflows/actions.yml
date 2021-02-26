@@ -6,7 +6,7 @@ name: QualtircsDeletionApp
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ main ]
+    branches: [ master ]
   # schedule:
   #   - cron: "0 0 21 * *"
 #  pull_request:
@@ -34,7 +34,7 @@ jobs:
           echo $GITHUB_WORKSPACE - $GITHUB_REPOSITORY - $GITHUB_SHA
           echo ${{secrets.EMAIL_ID}} - ${{secrets.EMAIL_PWD}}
       - name: 'Checkout'
-        uses: actions/checkout@main
+        uses: actions/checkout@master
       - name: List Files after checkout
         run: dir
       - name: Run

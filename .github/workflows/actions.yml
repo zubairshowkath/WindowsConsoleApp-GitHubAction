@@ -1,0 +1,87 @@
+# This is a basic workflow to help you get started with Actions
+
+name: QualtircsDeletionApp
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  # schedule:
+  #   - cron: "0 0 21 * *"
+#  pull_request:
+#    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+ # workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  run-windows-commands:
+    runs-on: windows-latest
+    #needs: ['previous job name']
+    steps:
+      - name: Directory PowerShell
+        run: Get-Location
+        #shell: cmd
+      # - name: Directory Bash
+      #   run: pwd
+      #   shell: bash
+      - name: List Files
+        run: |
+          pwd
+          ls
+          echo $GITHUB_WORKSPACE - $GITHUB_REPOSITORY - $GITHUB_SHA
+          echo ${{secrets.EMAIL_ID}} - ${{secrets.EMAIL_PWD}}
+      - name: 'Checkout'
+        uses: actions/checkout@main
+      - name: List Files after checkout
+        run: dir
+      - name: Run
+        run: ./HelloWorld.exe
+      - name: Send email
+        uses: devellany/send-mail@v1.0.2
+        with:
+            host: smtp.google.com
+            port: 465
+            account: ${{secrets.EMAIL_ID}}
+            password: ${{secrets.EMAIL_PWD}}
+            sender: Zubair
+            from: zubairsmd@gmail.com
+            subject: Github Actions job result
+            body: file://README.md
+            to: zubairsmd@yahoo.com
+            attachments: '[{"path":"README.md"}]'
+            
+        # uses: devellany/send-mailer@v1.0.2
+        # with:
+        #   host: smtp.google.com
+        #   account: ${{secrets.ACCOUNT}}
+        #   password: ${{secrets.MAIL_PASSWORD}}
+        #   sender: qualtircsdeletionapp
+        #   from: ${{secrets.MAIL_ADDRESS}}
+        #   to: zubairsmd@gmail.com
+        #   subject: mail title.
+        #   body: file://README.md
+        #   contentType: text/html
+        #   attachments: file://HelloWorld.deps.json
+        
+  # This workflow contains a single job called "build"
+#  build:
+#    # The type of runner that the job will run on
+#    runs-on: ubuntu-latest
+
+#   # Steps represent a sequence of tasks that will be executed as part of the job
+#    steps:
+#      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+#      - uses: actions/checkout@v2
+
+#      # Runs a single command using the runners shell
+#      - name: Run a one-line script
+#        run: echo Hello, world!
+
+#      # Runs a set of commands using the runners shell
+#      - name: Run a multi-line script
+#        run: |
+#          echo Add other actions to build,
+#          echo test, and deploy your project.

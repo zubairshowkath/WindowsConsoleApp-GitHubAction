@@ -51,7 +51,6 @@ jobs:
       #       to: zubairsmd@yahoo.com
             #attachments: '[{"path":"README.md"}]'
             
-
         # uses: devellany/send-mailer@v1.0.2
         # with:
         #   host: smtp.google.com

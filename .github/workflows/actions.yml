@@ -31,25 +31,27 @@ jobs:
         run: |
           pwd
           ls
-      - name: Checkout
+          echo $GITHUB_WORKSPACE - $GITHUB_REPOSITORY - $GITHUB_SHA
+          echo ${{secrets.EMAIL_ID}} - ${{secrets.EMAIL_PWD}}
+      - name: 'Checkout'
         uses: actions/checkout@main
       - name: List Files after checkout
         run: dir
       - name: Run
         run: ./HelloWorld.exe
-      # - name: Send email
-      #   uses: devellany/send-mail@v1.0.2
-      #   with:
-      #       host: smtp.google.com
-      #       port: 465
-      #       account: zubairsmd@gmail.com
-      #       password: 
-      #       sender: subair
-      #       from: zubairsmd@gmail.com
-      #       subject: Github Actions job result
-      #       body: file://README.md
-      #       to: zubairsmd@yahoo.com
-            #attachments: '[{"path":"README.md"}]'
+      - name: Send email
+        uses: devellany/send-mail@v1.0.2
+        with:
+            host: smtp.google.com
+            port: 465
+            account: ${{secrets.EMAIL_ID}}
+            password: ${{secrets.EMAIL_PWD}}
+            sender: Zubair
+            from: zubairsmd@gmail.com
+            subject: Github Actions job result
+            body: file://README.md
+            to: zubairsmd@yahoo.com
+            attachments: '[{"path":"README.md"}]'
             
         # uses: devellany/send-mailer@v1.0.2
         # with:

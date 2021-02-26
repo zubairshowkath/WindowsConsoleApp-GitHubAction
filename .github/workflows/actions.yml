@@ -19,6 +19,7 @@ on:
 jobs:
   run-windows-commands:
     runs-on: windows-latest
+    
     #needs: ['previous job name']
     steps:
       - name: Directory PowerShell
@@ -28,11 +29,11 @@ jobs:
       #   run: pwd
       #   shell: bash
       - name: List Files
-        run: |
-          pwd
-          ls
+        run: |   
           echo $GITHUB_WORKSPACE - $GITHUB_REPOSITORY - $GITHUB_SHA
           echo ${{secrets.EMAIL_ID}} - ${{secrets.EMAIL_PWD}}
+          pwd
+          ls
       - name: 'Checkout'
         uses: actions/checkout@master
       - name: List Files after checkout
